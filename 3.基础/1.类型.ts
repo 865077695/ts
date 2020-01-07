@@ -168,3 +168,55 @@
     // any
     let arr5: any[] = [1, "a", {}, []]
 }
+
+{
+    /**
+     * 函数类型
+     * 
+     */
+    // 函数声明和函数表达式
+    // 函数声明
+    function fn_1(x: number, y: number): number {
+        return x + y
+    }
+    // 函数表达式，函数表达式中的fn_2其实并没有指定类型
+    let fn_2 = function (x: number, y: number): number {
+        return x + y
+    }
+    // 指定fn_3是一个接收x、y数值，返回number类型的函数，然后给他赋值
+    let fn_3: (x: number, y: number) => number = function (x: number, y: number): number {
+        return x + y;
+    }
+
+
+    // 用接口定义函数  ?可选参数
+    interface SearchFunc {
+        (source: string, subString?: string): boolean;
+    }
+
+
+    let mySearch: SearchFunc;
+    // 默认参数、剩余参数
+    mySearch = function (source: string, subString: string = 'Cat', ...items: any[]) {
+        return source.search(subString) !== -1;
+    }
+    // 重载 重载允许一个函数接受不同数量或类型的参数时，作出不同的处理。
+    // 利用联合类型：
+    function fn_4(x: number | string): number | string {    // 这种写法无法定义当传入是number时返回string还是number
+        if (typeof x === 'number') {
+            return Number(x.toString().split('').reverse().join(''));
+        } else if (typeof x === 'string') {
+            return x.split('').reverse().join('');
+        }
+    }
+    // 利用重载
+    function reverse(x: number): number;    // 定义一组输入输出类型
+    function reverse(x: string): string;
+    function reverse(x: number | string): number | string {
+        if (typeof x === 'number') {
+            return Number(x.toString().split('').reverse().join(''));
+        } else if (typeof x === 'string') {
+            return x.split('').reverse().join('');
+        }
+    }
+}
